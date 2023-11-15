@@ -5,7 +5,8 @@ import {Progress} from "antd";
 
 function App() {
   const [temperatures, setTemperatures] = useState<any>([]);
-  const [currentHumidity, setCurrentHumidity] = useState<any>(null);
+  const [latestTemperature, setLatestTemperature] = useState<any>(null);
+  console.log('latestTemperature', latestTemperature)
   const fetchData = async () => {
     try {
       const url = "https://lilhuy-supabase.click/temperature?limit=1000";
@@ -15,7 +16,7 @@ function App() {
       }
       const data = await response.json();
       setTemperatures(data.data)
-      setCurrentHumidity(data.data[data.data.length - 1])
+      setLatestTemperature(data.data[data.data.length - 1])
     } catch (err: any) {
       console.log("err", err);
     }
@@ -23,7 +24,7 @@ function App() {
   useEffect(() => {
     fetchData();
   }, []);
-  const lastTemperature = temperatures[temperatures.length - 1];
+
 
   return (
     <>
@@ -37,15 +38,15 @@ function App() {
             Nhiệt độ tầng 4 nhà đk đọc từ cảm biến nhiệt độ và độ ẩm DHT22!
           </div>
           <div className='text-center my-3'>
-            <span>Nhiệt độ: {lastTemperature?.temperature} °C | </span>
-            <span>Cảm giác như: {lastTemperature?.heatIndex} °C | </span>
-            <span>Cập nhật lúc: {moment(lastTemperature?.createdAt).format('DD/MM HH:MM')}</span>
+            <span>Nhiệt độ: {latestTemperature?.temperature} °C | </span>
+            <span>Cảm giác như: {latestTemperature?.heatIndex} °C | </span>
+            <span>Cập nhật lúc: {moment(latestTemperature?.createdAt).format('DD/MM HH:mm')}</span>
           </div>
           <TemperatureChart
             width={600}
             height={300}
             temperatures={temperatures}
-            setCurrentHumidity={setCurrentHumidity}
+            setLatestTemperature={setLatestTemperature}
           />
           <div>
             <h3 className='text-center my-3'>Độ ẩm</h3>
@@ -53,7 +54,7 @@ function App() {
               <Progress
                 type={'circle'}
                 size={150}
-                percent={currentHumidity?.humidity}
+                percent={latestTemperature?.humidity}
               />
             </div>
           </div>

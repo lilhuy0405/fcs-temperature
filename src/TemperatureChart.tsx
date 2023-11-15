@@ -5,7 +5,7 @@ import moment from "moment";
 //@ts-ignore
 import mqtt from "mqtt/dist/mqtt.esm";
 
-const TemperatureChart = ({width, height, temperatures, setCurrentHumidity}: any) => {
+const TemperatureChart = ({width, height, temperatures, setLatestTemperature}: any) => {
 
   const topic = 'esp32/temperature-bot/web'
   const [currentLine, setCurrentLine] = useState<any>(null)
@@ -103,7 +103,7 @@ const TemperatureChart = ({width, height, temperatures, setCurrentHumidity}: any
         if (+lastBar.time > +newBar.time) {
           return;
         }
-        setCurrentHumidity(newBar);
+        setLatestTemperature(newBar);
         const offset = new Date().getTimezoneOffset() * -1;
         const offsetHours = offset / 60;
         const newBarNormalized: any = {
@@ -121,12 +121,12 @@ const TemperatureChart = ({width, height, temperatures, setCurrentHumidity}: any
       // window.removeEventListener('resize', handleResize);
       chart.remove();
     };
-  }, [width, height, chartData]);
+  }, [width, height, chartData, setLatestTemperature]);
 
   return (
     <div style={{position: 'relative'}}>
       <div className='chart-legend'>
-         {currentLine?.value} °C
+        {currentLine?.value} °C
       </div>
       <div ref={chartContainerRef}/>
     </div>
