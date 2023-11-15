@@ -8,7 +8,7 @@ function App() {
   const [currentHumidity, setCurrentHumidity] = useState<any>(null);
   const fetchData = async () => {
     try {
-      const url = "http://54.255.62.9:3000/temperature?limit=1000";
+      const url = "https://lilhuy-supabase.click/temperature?limit=1000";
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Network response was not ok");
