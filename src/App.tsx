@@ -54,7 +54,7 @@ function App() {
             <div ref={containerRef}>
               <h1 className='text-center'>FCS Temperature</h1>
               <div className='text-center my-3'>
-                Nhiệt độ tầng 4 nhà đk đọc từ cảm biến nhiệt độ và độ ẩm DHT22!
+                Nhiệt độ phòng server đọc từ cảm biến nhiệt độ và độ ẩm DHT22!
               </div>
               <div className='text-center my-3'>
                 <span>Nhiệt độ: {latestTemperature?.temperature} °C | </span>
